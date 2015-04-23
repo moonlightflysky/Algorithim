@@ -1,0 +1,73 @@
+package tree;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+public class PathFromRootToLeaf{
+
+	public static class TreeNode {
+	     int val;
+	     TreeNode left;
+	     TreeNode right;
+	     TreeNode(int x) { val = x; }
+	 }
+
+	public ArrayList<ArrayList<Integer>> pathFromRootToLeaf(TreeNode root){
+		
+		ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+		
+		if (root == null){
+			return res;
+		}
+		
+		Stack<ArrayList<Integer>> pathStack = new Stack<ArrayList<Integer>>();
+		Stack<TreeNode> nodeStack = new Stack<TreeNode>();
+		ArrayList<Integer> item = new ArrayList<Integer>();
+		TreeNode cur = root;
+		
+		while (cur != null || !nodeStack.isEmpty()){
+			if (cur != null){
+				item.add(cur.val);
+				pathStack.push(new ArrayList<Integer>(item));
+				nodeStack.push(cur);
+				cur = cur.left;
+			}
+			
+			else{
+				TreeNode t = nodeStack.pop();
+				item = pathStack.pop();
+				if (t.right != null){
+					cur = t.right;
+				}
+				
+				else{
+					if (t.left == null){
+						res.add(new ArrayList<Integer> (item));
+					}
+				}
+			
+			}
+		
+		}
+		
+		return res;
+	
+	}
+	
+	public static void main(String[] argv){
+		
+		TreeNode root = new TreeNode(8);
+		root.left = new TreeNode(5);
+		root.right = new TreeNode(12);
+		root.left.left = new TreeNode(3);
+		root.left.right = new TreeNode(7);
+		root.left.right.left = new TreeNode(6);
+		root.right.left = new TreeNode(11);
+		
+		PathFromRootToLeaf test = new PathFromRootToLeaf();
+		System.out.println(test.pathFromRootToLeaf(root).toString());
+		
+		
+	}
+
+}
