@@ -49,7 +49,7 @@ public class RewindingString {
 	public static void main(String[] argv){
 		
 		RewindingString test = new RewindingString();
-		System.out.println(test.isMultipileDuplicate("abcdabcdeabcdabcde"));
+		System.out.println(test.isMultipileDuplicate("abcababcab"));
 		
 	}
 
