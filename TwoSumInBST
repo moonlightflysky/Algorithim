@@ -1,0 +1,87 @@
+package inter_tree;
+
+import java.util.Stack;
+
+public class TwoSumInBST {
+	
+	public static class TreeNode {
+	     int val;
+	     TreeNode left;
+	     TreeNode right;
+	     TreeNode(int x) { val = x; }
+	}
+	
+	public int[] twoSumBST(TreeNode root, int target){
+		
+		int[] res = new int[2];
+		
+		if (root == null){
+			return res;
+		}
+		
+		Stack<TreeNode> stack1 = new Stack<TreeNode>();
+		Stack<TreeNode> stack2 = new Stack<TreeNode>();
+		
+		TreeNode cur1 = root;
+		TreeNode cur2 = root;
+		
+		boolean flag1 = true;
+		boolean flag2 = true;
+		
+		TreeNode left = null;
+		TreeNode right = null;
+		
+		while(true){
+			
+			if (flag1){
+				
+				while(cur1!= null){
+					stack1.push(cur1);
+					cur1 = cur1.left;
+				}
+				
+				left = stack1.pop();
+				if (left.right != null){
+					cur1 = left.right;
+				}
+				
+			}
+			
+			if (flag2){
+				while(cur2!= null){
+					stack2.push(cur2);
+					cur2 = cur2.right;
+				}
+				
+				right = stack2.pop();
+				if (right.left != null){
+					cur2 = right.left;
+				}
+			}
+			
+			if (left.val >= right.val){
+				break;
+			}
+			
+			else if (left.val + right.val == target){
+				res[0] = left.val;
+				res[1] = right.val;
+				return res;
+			}
+			
+			else if (left.val + right.val < target){
+				flag1 = true;
+				flag2 = false;
+			}
+			
+			else{
+				flag2 = true;
+				flag1 = false;
+			}
+			
+		}
+		
+		return res;
+	}
+
+}
